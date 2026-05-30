@@ -1,6 +1,5 @@
 package au.edu.swin.sdmd.themedallists
 
-// Data class representing a country's Olympic medal record
 data class Medallist(
     val country: String,
     val iocCode: String,
@@ -9,11 +8,9 @@ data class Medallist(
     val silver: Int,
     val bronze: Int
 ) {
-    // Computed property to get total medal count
     val totalMedals: Int
         get() = gold + silver + bronze
 
-    // Determines the highest medal type this country has earned
     val highestMedalType: String
         get() = when {
             gold > 0 -> "Gold"

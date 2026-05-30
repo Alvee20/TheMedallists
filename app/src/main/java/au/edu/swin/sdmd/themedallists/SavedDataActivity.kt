@@ -14,11 +14,9 @@ class SavedDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_saved_data)
 
-        // Enable the back button in the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.saved_data_title)
 
-        // Get references to the views
         val nameText = findViewById<TextView>(R.id.textSavedName)
         val iocCodeText = findViewById<TextView>(R.id.textSavedIocCode)
         val timesCompetedText = findViewById<TextView>(R.id.textSavedTimesCompeted)
@@ -26,12 +24,10 @@ class SavedDataActivity : AppCompatActivity() {
         val medalIcon = findViewById<ImageView>(R.id.imageSavedMedal)
         val flagText = findViewById<TextView>(R.id.textSavedFlag)
 
-        // Read from SharedPreferences
         val prefs = getSharedPreferences("medallist_prefs", MODE_PRIVATE)
         val country = prefs.getString("last_country", null)
 
         if (country != null) {
-            // Data exists — display it
             val iocCode = prefs.getString("last_ioc_code", "") ?: ""
             val timesCompeted = prefs.getInt("last_times_competed", 0)
             val gold = prefs.getInt("last_gold", 0)
@@ -43,7 +39,6 @@ class SavedDataActivity : AppCompatActivity() {
             timesCompetedText.text = "Competed $timesCompeted times"
             medalsText.text = "Gold: $gold  |  Silver: $silver  |  Bronze: $bronze"
 
-            // Show flag emoji if available
             val flagEmoji = FlagHelper.getFlagEmoji(iocCode)
             if (flagEmoji != null) {
                 flagText.text = flagEmoji
@@ -52,7 +47,6 @@ class SavedDataActivity : AppCompatActivity() {
                 flagText.visibility = View.GONE
             }
 
-            // Set the medal icon colour
             val highestType = when {
                 gold > 0 -> "Gold"
                 silver > 0 -> "Silver"
@@ -70,7 +64,6 @@ class SavedDataActivity : AppCompatActivity() {
                 background.setColor(medalColor)
             }
         } else {
-            // No data saved yet
             nameText.text = getString(R.string.no_saved_data)
             iocCodeText.text = ""
             timesCompetedText.text = ""
@@ -79,7 +72,6 @@ class SavedDataActivity : AppCompatActivity() {
         }
     }
 
-    // Handle the back button press in the action bar
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true

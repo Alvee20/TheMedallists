@@ -1,14 +1,7 @@
 package au.edu.swin.sdmd.themedallists
 
-/**
- * Helper object that converts IOC country codes to flag emojis.
- * It maps IOC codes to ISO 3166-1 alpha-2 codes, then converts
- * those to Unicode regional indicator symbols which render as flag emojis.
- */
 object FlagHelper {
 
-    // Maps IOC country codes to ISO 3166-1 alpha-2 codes
-    // Historical nations are mapped to their closest modern successor state
     private val iocToIsoMap = mapOf(
         "AFG" to "AF", "ALB" to "AL", "ALG" to "DZ", "ASA" to "AS",
         "AND" to "AD", "ANG" to "AO", "ANT" to "AG", "ARG" to "AR",
@@ -63,7 +56,6 @@ object FlagHelper {
         "VEN" to "VE", "VIE" to "VN", "ISV" to "VI", "YEM" to "YE",
         "ZAM" to "ZM", "ZIM" to "ZW",
 
-        // Historical and dissolved nations mapped to successor states
         "ANZ" to "AU", // Australasia → Australia
         "BOH" to "CZ", // Bohemia → Czech Republic
         "BWI" to "JM", // British West Indies → Jamaica
@@ -87,15 +79,8 @@ object FlagHelper {
         "OAR" to "RU"  // Olympic Athletes from Russia → Russia
     )
 
-    /**
-     * Converts an IOC code to a flag emoji string.
-     * Returns null if the IOC code has no matching ISO country code
-     * (e.g. for special teams like Mixed team or Refugee Olympic Team).
-     */
     fun getFlagEmoji(iocCode: String): String? {
         val isoCode = iocToIsoMap[iocCode] ?: return null
-        // Each letter is converted to a regional indicator Unicode symbol
-        // 'A' maps to U+1F1E6, 'B' to U+1F1E7, etc.
         val first = Character.toChars(0x1F1E6 + (isoCode[0].uppercaseChar() - 'A'))
         val second = Character.toChars(0x1F1E6 + (isoCode[1].uppercaseChar() - 'A'))
         return String(first) + String(second)
